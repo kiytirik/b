@@ -1,0 +1,126 @@
+html,body {
+    width: 100%;
+    height: 100%;
+
+}
+
+body {
+    padding: 5vw;
+    margin: 0;
+
+    padding: 10vw;
+
+}
+
+h1 {
+    text-align: center;
+    font-size: 10rem;
+    animation-name: turnme;
+    animation-duration: 5s;
+    animation-timing-function:linear;
+    animation-iteration-count: infinite;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.box {
+    background-color: orange;
+    display: inline-block;
+    width: 20vw;
+    height: 20vw;
+    box-shadow: 0 0 20px 0 #9a6200;
+    box-shadow: 0 0 20px 0 #91846f;
+    transition: all 0.3s ease-in-out;
+
+}
+
+#thread-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#thread-svg line {
+    filter: drop-shadow(0 0 2px #b22222) blur(0.2px);
+}
+
+body {
+        transition: all 1s ease-in-out;
+        transform: translate3d(0,-2vh,0) perspective(2vw) rotateY(45deg) rotateZ(-80deg)  ; /* x,y,z */
+        /* perspective(2vw) is the distance from the viewer to the object */
+}
+
+.chalk-title {
+    position: absolute;
+    top: 12vw;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    font-size: 6vw;
+    color: #e53935;
+    font-family: 'Caveat', 'Comic Sans MS', cursive, sans-serif;
+    text-shadow:
+        1px 1px 0 #fff,
+        2px 2px 2px #e53935,
+        0 0 8px #fff,
+        0 0 2px #e53935;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid #e53935;
+    width: 0;
+    animation: chalk-write 3s steps(30, end) forwards;
+}
+
+@keyframes chalk-write {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/**** * CSS Animation: 3D Rotation ****/
+@keyframes turnme {
+    0% {
+        transform: rotateY(0deg);
+        transform: rotateZ(0deg);
+    }
+    25% {
+        transform: rotateY(0deg);
+        transform: rotateZ(10deg);
+    }
+    50% {
+        transform: rotateZ(0deg);
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+animation bouncingball infinite;
+@keyframes bouncingball {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Optional: import a handwriting font */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #aaa;
+            margin: 40px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .draggable {
+            width: 200px;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body>
+    <svg id="thread-svg" style="position:absolute; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:10;">
+        <line id="thread-line" x1="0" y1="0" x2="0" y2="0" stroke="red" stroke-width="3" stroke-dasharray="6,4"/>
+    </svg>
+    <div id="image-container" draggable="true">
+        <img src="seethrufish3.jpg" alt="Description" class="draggable" id="drag-img">
+    </div>
+
+    <section class="box" id="drop-box">
+        <!-- Drop image here -->
+    </section>
+
+    <h1>Headline in the center</h1>
+
+    <script>
+        const imgContainer = document.getElementById('image-container');
+        const dropBox = document.getElementById('drop-box');
+        const img = document.getElementById('drag-img');
+        const threadLine = document.getElementById('thread-line');
+        const threadSVG = document.getElementById('thread-svg');
+
+        let origin = null;
+
+        imgContainer.addEventListener('dragstart', (e) => {
+            // Get the center of the image as the origin
+            const rect = img.getBoundingClientRect();
+            origin = {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
+            threadLine.setAttribute('x1', origin.x);
+            threadLine.setAttribute('y1', origin.y);
+            threadLine.setAttribute('x2', origin.x);
+            threadLine.setAttribute('y2', origin.y);
+            threadSVG.style.display = 'block';
+
+            document.addEventListener('dragover', drawThread);
+        });
+
+        function drawThread(e) {
+            threadLine.setAttribute('x2', e.clientX);
+            threadLine.setAttribute('y2', e.clientY);
+        }
+
+        imgContainer.addEventListener('dragend', (e) => {
+            threadSVG.style.display = 'none';
+            document.removeEventListener('dragover', drawThread);
+        });
+
+        dropBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        dropBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imgContainer.innerHTML = '';
+            dropBox.innerHTML = `
+                <img src="seethrufish3.jpg" alt="Description" style="width:200px;" draggable="false">
+                <br>
+                <a href="https://aframe.io/docs/1.7.0/introduction/installation.html.html" target="_blank" style="font-size:18px; color:blue; text-decoration:underline;">
+                    Go to the other page
+                </a>
+            `;
+            threadSVG.style.display = 'none';
+            document.removeEventListener('dragover', drawThread);
+        });
+    </script>
+</body>
+</html>
